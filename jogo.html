@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantify Master - Learn English Quantifiers</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #43aa8b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
+        }
+
+        .auth-buttons button {
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .game-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .game-description {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            max-width: 700px;
+        }
+
+        .game-screen {
+            width: 100%;
+            display: none;
+        }
+
+        .active-screen {
+            display: block;
+        }
+
+        .question-container {
+            background-color: var(--light);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .question-text {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .option-btn {
+            background-color: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .option-btn.selected {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .option-btn.correct {
+            background-color: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .option-btn.incorrect {
+            background-color: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        .next-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .next-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            height: 10px;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            transition: width 0.3s ease;
+        }
+
+        .score-display {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .result-screen {
+            text-align: center;
+            display: none;
+        }
+
+        .result-icon {
+            font-size: 80px;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .result-score {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .result-message {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .primary-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .secondary-btn {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--light);
+            transform: translateY(-2px);
+        }
+
+        .auth-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--secondary);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .form-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-link:hover {
+            text-decoration: underline;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .guide-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .guide-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .quantifier-card {
+            background-color: var(--light);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .quantifier-name {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .quantifier-usage {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .quantifier-examples {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .example-item {
+            margin-bottom: 8px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .example-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .leaderboard-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .leaderboard-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table th {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .leaderboard-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .leaderboard-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .leaderboard-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .rank {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .user-score {
+            font-weight: bold;
+        }
+
+        .group-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .group-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .group-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .group-card {
+            background-color: var(--light);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
+        }
+
+        .group-name {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .group-members {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .group-join-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .group-join-btn:hover {
+            background-color: var(--secondary);
+        }
+
+        .create-group-form {
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .auth-buttons {
+                display: flex;
+                gap: 10px;
+            }
+            
+            .game-container {
+                padding: 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background-color: var(--danger);
+        }
+
+        .toast i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+               
+                <span>Quantify Master</span>
+            </div>
+            <div id="auth-buttons" class="auth-buttons">
+                <button id="login-btn">Login</button>
+                <button id="register-btn">Register</button>
+            </div>
+            <div id="user-info" class="user-info" style="display: none;">
+                <div class="user-avatar" id="user-avatar">U</div>
+                <span id="username-display">User</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="game-container">
+            <h1 class="game-title">Quantify Master</h1>
+            <p class="game-description">Learn English quantifiers through this interactive game. Test your knowledge, compete with friends, and master these essential grammar elements!</p>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="game">Game</button>
+                <button class="tab-btn" data-tab="guide">Guide</button>
+                <button class="tab-btn" data-tab="leaderboard">Leaderboard</button>
+                <button class="tab-btn" data-tab="groups">Groups</button>
+            </div>
+
+            <div class="tab-content active" id="game-tab">
+                <div id="start-screen" class="game-screen active-screen fade-in">
+                    <div style="text-align: center;">
+                        <i class="fas fa-play-circle" style="font-size: 80px; color: var(--accent); margin-bottom: 20px;"></i>
+                        <h2 style="font-size: 28px; margin-bottom: 15px; color: var(--primary);">Ready to Test Your Knowledge?</h2>
+                        <p style="font-size: 18px; margin-bottom: 30px; color: #666;">You'll be presented with 10 random questions about English quantifiers. Choose the correct answer for each one!</p>
+                        <button id="start-btn" class="primary-btn action-btn" style="padding: 15px 40px; font-size: 18px;">
+                            Start Game <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="game-screen" class="game-screen">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="score-display" id="score-display">Score: 0</div>
+                    <div class="question-container fade-in" id="question-container">
+                        <div class="question-text" id="question-text">Loading question...</div>
+                        <div class="options-container" id="options-container">
+                            <!-- Options will be inserted here by JavaScript -->
+                        </div>
+                        <button class="next-btn" id="next-btn">Next Question</button>
+                    </div>
+                </div>
+
+                <div id="result-screen" class="game-screen result-screen">
+                    <i class="fas fa-trophy result-icon"></i>
+                    <h2 class="result-title">Game Completed!</h2>
+                    <div class="result-score">Your score: <span id="final-score">0</span>/10</div>
+                    <p class="result-message" id="result-message">Great job! You're getting better with quantifiers!</p>
+                    <div class="action-buttons">
+                        <button id="play-again-btn" class="primary-btn action-btn">Play Again</button>
+                        <button id="review-btn" class="secondary-btn action-btn">Review Answers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="guide-tab">
+                <div class="guide-container">
+                    <h2 class="guide-title">Quantifiers Guide</h2>
+                    <p style="margin-bottom: 20px; color: #666;">Quantifiers are words that precede and modify nouns to indicate quantity. Here's a guide to the most common English quantifiers:</p>
+                    
+                    <div class="quantifier-card">
+                        <h3 class="quantifier-name">Some / Any</h3>
+                        <p class="quantifier-usage">Used with plural countable nouns and uncountable nouns to indicate an unspecified quantity.</p>
+                        <div class="quantifier-examples">
+                            <div class="example-item">I have <strong>some</strong> books in my bag. (affirmative)</div>
+                            <div class="example-item">Do you have <strong>any</strong> sugar? (question)</div>
+                            <div class="example-item">We don't have <strong>any</strong> milk left. (negative)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantifier-card">
+                        <h3 class="quantifier-name">Much / Many</h3>
+                        <p class="quantifier-usage">Used to talk about large quantities (much with uncountable nouns, many with countable nouns).</p>
+                        <div class="quantifier-examples">
+                            <div class="example-item">There isn't <strong>much</strong> time left. (uncountable)</div>
+                            <div class="example-item">How <strong>many</strong> people are coming? (countable)</div>
+                            <div class="example-item">Too <strong>much</strong> sugar is bad for your health.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantifier-card">
+                        <h3 class="quantifier-name">A few / A little</h3>
+                        <p class="quantifier-usage">Used to talk about small quantities (a few with countable nouns, a little with uncountable nouns).</p>
+                        <div class="quantifier-examples">
+                            <div class="example-item">I have <strong>a few</strong> friends in London. (countable)</div>
+                            <div class="example-item">Add <strong>a little</strong> salt to the soup. (uncountable)</div>
+                            <div class="example-item">We have <strong>a few</strong> minutes before the meeting starts.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantifier-card">
+                        <h3 class="quantifier-name">A lot of / Lots of</h3>
+                        <p class="quantifier-usage">Used with both countable and uncountable nouns in affirmative sentences.</p>
+                        <div class="quantifier-examples">
+                            <div class="example-item">There are <strong>a lot of</strong> apples on the tree. (countable)</div>
+                            <div class="example-item">She has <strong>lots of</strong> patience. (uncountable)</div>
+                            <div class="example-item">We have <strong>a lot of</strong> work to do.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantifier-card">
+                        <h3 class="quantifier-name">Few / Little</h3>
+                        <p class="quantifier-usage">Used to emphasize that the quantity is smaller than expected or desired.</p>
+                        <div class="quantifier-examples">
+                            <div class="example-item"><strong>Few</strong> people understand this theory. (countable, negative emphasis)</div>
+                            <div class="example-item">There's <strong>little</strong> chance of rain today. (uncountable, negative emphasis)</div>
+                            <div class="example-item"><strong>Few</strong> students passed the difficult exam.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantifier-card">
+                        <h3 class="quantifier-name">Several</h3>
+                        <p class="quantifier-usage">Used with plural countable nouns to indicate more than two but not many.</p>
+                        <div class="quantifier-examples">
+                            <div class="example-item">I've been to Paris <strong>several</strong> times.</div>
+                            <div class="example-item">There are <strong>several</strong> options available.</div>
+                            <div class="example-item">She has <strong>several</strong> books on the subject.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantifier-card">
+                        <h3 class="quantifier-name">Enough</h3>
+                        <p class="quantifier-usage">Used to indicate that the quantity is sufficient.</p>
+                        <div class="quantifier-examples">
+                            <div class="example-item">We have <strong>enough</strong> chairs for everyone. (countable)</div>
+                            <div class="example-item">Is there <strong>enough</strong> time to finish? (uncountable)</div>
+                            <div class="example-item">She didn't have <strong>enough</strong> money to buy it.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quantifier-card">
+                        <h3 class="quantifier-name">All / Most / Some / None</h3>
+                        <p class="quantifier-usage">Used to talk about quantities in relation to a whole.</p>
+                        <div class="quantifier-examples">
+                            <div class="example-item"><strong>All</strong> students must attend the lecture.</div>
+                            <div class="example-item"><strong>Most</strong> people enjoy traveling.</div>
+                            <div class="example-item"><strong>Some</strong> of the answers were correct.</div>
+                            <div class="example-item"><strong>None</strong> of the information was accurate.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="leaderboard-tab">
+                <div class="leaderboard-container">
+                    <h2 class="leaderboard-title">Leaderboard</h2>
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Player</th>
+                                <th>High Score</th>
+                                <th>Games Played</th>
+                                <th>Accuracy</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <!-- Leaderboard data will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-content" id="groups-tab">
+                <div class="group-container">
+                    <h2 class="group-title">Study Groups</h2>
+                    <p style="text-align: center; margin-bottom: 30px; color: #666;">Join a group to compete with friends and track your progress together!</p>
+                    
+                    <div class="group-list" id="group-list">
+                        <!-- Groups will be inserted here by JavaScript -->
+                    </div>
+                    
+                    <div class="create-group-form" id="create-group-form" style="display: none;">
+                        <h3 style="margin-bottom: 20px; color: var(--primary);">Create New Group</h3>
+                        <div class="form-group">
+                            <label for="group-name" class="form-label">Group Name</label>
+                            <input type="text" id="group-name" class="form-input" placeholder="Enter group name">
+                        </div>
+                        <div class="form-group">
+                            <label for="group-description" class="form-label">Description</label>
+                            <input type="text" id="group-description" class="form-input" placeholder="Enter group description">
+                        </div>
+                        <button id="create-group-btn" class="submit-btn">Create Group</button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button id="show-create-group-btn" class="primary-btn action-btn">
+                            <i class="fas fa-plus" style="margin-right: 8px;"></i> Create New Group
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modals -->
+    <div id="login-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div class="auth-form fade-in">
+            <h2 class="form-title">Login</h2>
+            <div class="form-group">
+                <label for="login-email" class="form-label">Email</label>
+                <input type="email" id="login-email" class="form-input" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="login-password" class="form-label">Password</label>
+                <input type="password" id="login-password" class="form-input" placeholder="Enter your password">
+            </div>
+            <button id="login-submit-btn" class="submit-btn">Login</button>
+            <div class="form-footer">
+                Don't have an account? <a href="#" class="form-link" id="show-register-link">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="register-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div class="auth-form fade-in">
+            <h2 class="form-title">Register</h2>
+            <div class="form-group">
+                <label for="register-username" class="form-label">Username</label>
+                <input type="text" id="register-username" class="form-input" placeholder="Choose a username">
+            </div>
+            <div class="form-group">
+                <label for="register-email" class="form-label">Email</label>
+                <input type="email" id="register-email" class="form-input" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="register-password" class="form-label">Password</label>
+                <input type="password" id="register-password" class="form-input" placeholder="Create a password">
+            </div>
+            <div class="form-group">
+                <label for="register-confirm-password" class="form-label">Confirm Password</label>
+                <input type="password" id="register-confirm-password" class="form-input" placeholder="Confirm your password">
+            </div>
+            <button id="register-submit-btn" class="submit-btn">Register</button>
+            <div class="form-footer">
+                Already have an account? <a href="#" class="form-link" id="show-login-link">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Success message</span>
+    </div>
+
+    <script>
+        // Game Data
+        const questions = [
+            {
+                question: "I have ____ apples in my bag.",
+                options: ["a few", "a little", "much", "many"],
+                correctAnswer: "a few",
+                explanation: "We use 'a few' with countable nouns like 'apples' to indicate a small quantity."
+            },
+            {
+                question: "There isn't ____ milk left in the fridge.",
+                options: ["many", "a few", "much", "few"],
+                correctAnswer: "much",
+                explanation: "We use 'much' with uncountable nouns like 'milk' in negative sentences."
+            },
+            {
+                question: "She has ____ friends who live abroad.",
+                options: ["a little", "much", "a lot of", "a few"],
+                correctAnswer: "a lot of",
+                explanation: "'A lot of' can be used with both countable and uncountable nouns in affirmative sentences."
+            },
+            {
+                question: "Would you like ____ sugar in your coffee?",
+                options: ["a few", "many", "some", "few"],
+                correctAnswer: "some",
+                explanation: "We use 'some' in questions when we expect or encourage a positive answer."
+            },
+            {
+                question: "There are ____ students in the library today.",
+                options: ["much", "a little", "a few", "little"],
+                correctAnswer: "a few",
+                explanation: "'A few' is used with countable nouns like 'students' to indicate a small quantity."
+            },
+            {
+                question: "We don't have ____ time before the meeting.",
+                options: ["many", "much", "a few", "few"],
+                correctAnswer: "much",
+                explanation: "We use 'much' with uncountable nouns like 'time' in negative sentences."
+            },
+            {
+                question: "He has ____ patience with noisy children.",
+                options: ["few", "little", "a few", "a little"],
+                correctAnswer: "little",
+                explanation: "'Little' with uncountable nouns emphasizes that the quantity is smaller than desired."
+            },
+            {
+                question: "There are ____ books on the shelf that I haven't read.",
+                options: ["a few", "a little", "much", "many"],
+                correctAnswer: "a few",
+                explanation: "'A few' is used with countable nouns like 'books' to indicate a small quantity."
+            },
+            {
+                question: "Do you have ____ brothers or sisters?",
+                options: ["some", "any", "much", "little"],
+                correctAnswer: "any",
+                explanation: "We use 'any' in questions with plural countable nouns."
+            },
+            {
+                question: "She didn't give me ____ help with the project.",
+                options: ["some", "any", "many", "few"],
+                correctAnswer: "any",
+                explanation: "We use 'any' in negative sentences with both countable and uncountable nouns."
+            },
+            {
+                question: "We need ____ more chairs for the guests.",
+                options: ["a few", "a little", "much", "many"],
+                correctAnswer: "a few",
+                explanation: "'A few' is used with countable nouns like 'chairs' to indicate a small additional quantity."
+            },
+            {
+                question: "There's ____ butter in the fridge if you need it.",
+                options: ["a few", "a little", "many", "few"],
+                correctAnswer: "a little",
+                explanation: "'A little' is used with uncountable nouns like 'butter' to indicate a small quantity."
+            },
+            {
+                question: "____ people know the truth about what happened.",
+                options: ["A few", "Few", "A little", "Little"],
+                correctAnswer: "Few",
+                explanation: "'Few' with countable nouns emphasizes that the quantity is smaller than expected."
+            },
+            {
+                question: "There's ____ hope of finding survivors now.",
+                options: ["a little", "little", "a few", "few"],
+                correctAnswer: "little",
+                explanation: "'Little' with uncountable nouns emphasizes that the quantity is smaller than desired."
+            },
+            {
+                question: "I've been to that restaurant ____ times.",
+                options: ["several", "much", "a little", "little"],
+                correctAnswer: "several",
+                explanation: "'Several' indicates more than two but not many, used with countable nouns."
+            },
+            {
+                question: "Do you have ____ money I could borrow?",
+                options: ["some", "any", "many", "few"],
+                correctAnswer: "some",
+                explanation: "We use 'some' in questions when we expect or encourage a positive answer."
+            },
+            {
+                question: "There aren't ____ good movies playing right now.",
+                options: ["some", "any", "much", "little"],
+                correctAnswer: "any",
+                explanation: "We use 'any' in negative sentences with plural countable nouns."
+            },
+            {
+                question: "She has ____ interesting ideas about the project.",
+                options: ["some", "any", "much", "little"],
+                correctAnswer: "some",
+                explanation: "We use 'some' in affirmative sentences with plural countable nouns."
+            },
+            {
+                question: "We have ____ oranges if you'd like one.",
+                options: ["a few", "a little", "much", "many"],
+                correctAnswer: "a few",
+                explanation: "'A few' is used with countable nouns like 'oranges' to indicate a small quantity."
+            },
+            {
+                question: "There's ____ coffee in the pot if you want some.",
+                options: ["a few", "a little", "many", "few"],
+                correctAnswer: "a little",
+                explanation: "'A little' is used with uncountable nouns like 'coffee' to indicate a small quantity."
+            },
+            {
+                question: "____ of the students passed the difficult exam.",
+                options: ["Few", "A few", "Little", "A little"],
+                correctAnswer: "Few",
+                explanation: "'Few' emphasizes that the number is smaller than expected or desired."
+            },
+            {
+                question: "There's ____ point in arguing with him.",
+                options: ["a little", "little", "a few", "few"],
+                correctAnswer: "little",
+                explanation: "'Little' emphasizes that the amount is insufficient or negligible."
+            },
+            {
+                question: "I need ____ more information before I can decide.",
+                options: ["a few", "a little", "many", "few"],
+                correctAnswer: "a little",
+                explanation: "'A little' is used with uncountable nouns like 'information' to indicate a small additional quantity."
+            },
+            {
+                question: "There are ____ cookies left in the jar.",
+                options: ["a few", "a little", "much", "many"],
+                correctAnswer: "a few",
+                explanation: "'A few' is used with countable nouns like 'cookies' to indicate a small remaining quantity."
+            },
+            {
+                question: "We have ____ flour to make a cake.",
+                options: ["enough", "few", "many", "several"],
+                correctAnswer: "enough",
+                explanation: "'Enough' indicates that the quantity is sufficient for the purpose."
+            },
+            {
+                question: "____ people arrived late because of the traffic.",
+                options: ["Much", "Many", "Little", "A little"],
+                correctAnswer: "Many",
+                explanation: "'Many' is used with plural countable nouns to indicate a large number."
+            },
+            {
+                question: "There wasn't ____ snow last winter.",
+                options: ["many", "much", "a few", "few"],
+                correctAnswer: "much",
+                explanation: "We use 'much' with uncountable nouns like 'snow' in negative sentences."
+            },
+            {
+                question: "She has ____ experience in this field.",
+                options: ["many", "much", "a few", "few"],
+                correctAnswer: "much",
+                explanation: "We use 'much' with uncountable nouns like 'experience' in affirmative sentences when we want to emphasize quantity."
+            },
+            {
+                question: "We saw ____ deer in the forest yesterday.",
+                options: ["several", "much", "a little", "little"],
+                correctAnswer: "several",
+                explanation: "'Several' indicates more than two but not many, used with countable nouns."
+            },
+            {
+                question: "There's ____ water in the bottle if you're thirsty.",
+                options: ["a few", "a little", "many", "few"],
+                correctAnswer: "a little",
+                explanation: "'A little' is used with uncountable nouns like 'water' to indicate a small remaining quantity."
+            },
+            {
+                question: "____ the students understood the complex theory.",
+                options: ["Few", "A few", "Little", "A little"],
+                correctAnswer: "Few",
+                explanation: "'Few' emphasizes that the number is smaller than expected or desired."
+            },
+            {
+                question: "There's ____ doubt that climate change is real.",
+                options: ["a little", "little", "a few", "few"],
+                correctAnswer: "little",
+                explanation: "'Little' emphasizes that the amount is insufficient or negligible."
+            },
+            {
+                question: "I have ____ questions about the assignment.",
+                options: ["a few", "a little", "much", "many"],
+                correctAnswer: "a few",
+                explanation: "'A few' is used with countable nouns like 'questions' to indicate a small number."
+            },
+            {
+                question: "There's ____ sugar in this recipe than in the original.",
+                options: ["less", "fewer", "a few", "a little"],
+                correctAnswer: "less",
+                explanation: "'Less' is used with uncountable nouns like 'sugar' for comparisons."
+            },
+            {
+                question: "There are ____ participants this year than last year.",
+                options: ["less", "fewer", "a little", "little"],
+                correctAnswer: "fewer",
+                explanation: "'Fewer' is used with plural countable nouns like 'participants' for comparisons."
+            },
+            {
+                question: "We have ____ time to finish the project.",
+                options: ["enough", "few", "many", "several"],
+                correctAnswer: "enough",
+                explanation: "'Enough' indicates that the quantity is sufficient for the purpose."
+            },
+            {
+                question: "____ the information was accurate.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "Some",
+                explanation: "'Some' indicates an unspecified portion of the whole."
+            },
+            {
+                question: "____ children enjoy playing games.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "Most",
+                explanation: "'Most' indicates a majority but not all of a group."
+            },
+            {
+                question: "____ of the answers were correct.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "All",
+                explanation: "'All' indicates the complete quantity or every one."
+            },
+            {
+                question: "____ the cake was eaten by the time we arrived.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "All",
+                explanation: "'All' indicates the complete quantity of the uncountable noun 'cake'."
+            },
+            {
+                question: "____ the students passed the exam with high marks.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "Some",
+                explanation: "'Some' indicates an unspecified portion of the whole group."
+            },
+            {
+                question: "____ of the equipment was damaged in the storm.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "Some",
+                explanation: "'Some' indicates an unspecified portion of the uncountable noun 'equipment'."
+            },
+            {
+                question: "____ people prefer warm weather to cold.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "Most",
+                explanation: "'Most' indicates a majority but not all people."
+            },
+            {
+                question: "____ the guests have arrived already.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "Most",
+                explanation: "'Most' indicates a majority but not all of the guests."
+            },
+            {
+                question: "____ the water has evaporated.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "Most",
+                explanation: "'Most' indicates a majority but not all of the uncountable noun 'water'."
+            },
+            {
+                question: "____ of the suggestions were helpful.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "Some",
+                explanation: "'Some' indicates an unspecified portion of the suggestions."
+            },
+            {
+                question: "____ the seats were taken when we arrived.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "All",
+                explanation: "'All' indicates that every seat was taken."
+            },
+            {
+                question: "____ the money was stolen from the safe.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "All",
+                explanation: "'All' indicates that the complete amount of money was stolen."
+            },
+            {
+                question: "____ of the paintings in the gallery are modern art.",
+                options: ["All", "Most", "Some", "None"],
+                correctAnswer: "Some",
+                explanation: "'Some' indicates an unspecified portion of the paintings."
+            }
+        ];
+
+        // Game State
+        let currentUser = null;
+        let gameState = {
+            currentQuestionIndex: 0,
+            score: 0,
+            selectedAnswer: null,
+            questions: [],
+            answers: []
+        };
+
+        // DOM Elements
+        const startScreen = document.getElementById('start-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const scoreDisplay = document.getElementById('score-display');
+        const finalScore = document.getElementById('final-score');
+        const resultMessage = document.getElementById('result-message');
+        const startBtn = document.getElementById('start-btn');
+        const playAgainBtn = document.getElementById('play-again-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const loginModal = document.getElementById('login-modal');
+        const registerModal = document.getElementById('register-modal');
+        const loginSubmitBtn = document.getElementById('login-submit-btn');
+        const registerSubmitBtn = document.getElementById('register-submit-btn');
+        const showRegisterLink = document.getElementById('show-register-link');
+        const showLoginLink = document.getElementById('show-login-link');
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        const usernameDisplay = document.getElementById('username-display');
+        const userAvatar = document.getElementById('user-avatar');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const leaderboardBody = document.getElementById('leaderboard-body');
+        const groupList = document.getElementById('group-list');
+        const showCreateGroupBtn = document.getElementById('show-create-group-btn');
+        const createGroupForm = document.getElementById('create-group-form');
+        const createGroupBtn = document.getElementById('create-group-btn');
+
+        // Mock database for demonstration
+        const mockDatabase = {
+            users: [
+                { id: 1, username: "testuser", email: "test@example.com", password: "password123", avatar: "T" }
+            ],
+            scores: [
+                { userId: 1, score: 8, date: "2023-05-15" },
+                { userId: 1, score: 6, date: "2023-05-10" }
+            ],
+            groups: [
+                { id: 1, name: "English Learners", description: "For everyone learning English", members: [1] },
+                { id: 2, name: "Grammar Masters", description: "Advanced grammar practice", members: [] }
+            ],
+            leaderboard: [
+                { userId: 1, username: "testuser", highScore: 8, gamesPlayed: 2, accuracy: 70 }
+            ]
+        };
+
+        // Initialize the game
+        function init() {
+            // Check if user is logged in (for demo purposes)
+            const loggedInUser = localStorage.getItem('quantifyMasterUser');
+            if (loggedInUser) {
+                currentUser = JSON.parse(loggedInUser);
+                updateUserUI();
+            }
+
+            // Set up event listeners
+            startBtn.addEventListener('click', startGame);
+            nextBtn.addEventListener('click', nextQuestion);
+            playAgainBtn.addEventListener('click', resetGame);
+            reviewBtn.addEventListener('click', reviewAnswers);
+            loginBtn.addEventListener('click', () => showModal('login'));
+            registerBtn.addEventListener('click', () => showModal('register'));
+            loginSubmitBtn.addEventListener('click', handleLogin);
+            registerSubmitBtn.addEventListener('click', handleRegister);
+            showRegisterLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showModal('register');
+            });
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showModal('login');
+            });
+            showCreateGroupBtn.addEventListener('click', () => {
+                createGroupForm.style.display = 'block';
+                showCreateGroupBtn.style.display = 'none';
+            });
+            createGroupBtn.addEventListener('click', createGroup);
+
+            // Tab switching
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+
+            // Initialize tabs
+            updateLeaderboard();
+            updateGroupsList();
+        }
+
+        // Update user UI when logged in/out
+        function updateUserUI() {
+            if (currentUser) {
+                authButtons.style.display = 'none';
+                userInfo.style.display = 'flex';
+                usernameDisplay.textContent = currentUser.username;
+                userAvatar.textContent = currentUser.avatar;
+            } else {
+                authButtons.style.display = 'block';
+                userInfo.style.display = 'none';
+            }
+        }
+
+        // Show modal
+        function showModal(modalType) {
+            if (modalType === 'login') {
+                loginModal.style.display = 'flex';
+                registerModal.style.display = 'none';
+            } else if (modalType === 'register') {
+                registerModal.style.display = 'flex';
+                loginModal.style.display = 'none';
+            }
+        }
+
+        // Hide all modals
+        function hideModals() {
+            loginModal.style.display = 'none';
+            registerModal.style.display = 'none';
+        }
+
+        // Handle login
+        function handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            // Simple validation
+            if (!email || !password) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            // Mock authentication
+            const user = mockDatabase.users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                    avatar: user.avatar
+                };
+                localStorage.setItem('quantifyMasterUser', JSON.stringify(currentUser));
+                updateUserUI();
+                hideModals();
+                showToast('Login successful!', 'success');
+            } else {
+                showToast('Invalid email or password', 'error');
+            }
+        }
+
+        // Handle registration
+        function handleRegister() {
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+
+            // Simple validation
+            if (!username || !email || !password || !confirmPassword) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+
+            // Check if user already exists (mock)
+            const userExists = mockDatabase.users.some(u => u.email === email);
+            if (userExists) {
+                showToast('Email already registered', 'error');
+                return;
+            }
+
+            // Create new user (mock)
+            const newUser = {
+                id: mockDatabase.users.length + 1,
+                username,
+                email,
+                password,
+                avatar: username.charAt(0).toUpperCase()
+            };
+
+            mockDatabase.users.push(newUser);
+            currentUser = {
+                id: newUser.id,
+                username: newUser.username,
+                email: newUser.email,
+                avatar: newUser.avatar
+            };
+
+            localStorage.setItem('quantifyMasterUser', JSON.stringify(currentUser));
+            updateUserUI();
+            hideModals();
+            showToast('Registration successful!', 'success');
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            toast.className = 'toast';
+            toast.classList.add(type === 'error' ? 'error' : 'success');
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Switch tabs
+        function switchTab(tabId) {
+            // Update tab buttons
+            tabBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update tab contents
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === `${tabId}-tab`) {
+                    content.classList.add('active');
+                }
+            });
+
+            // Update specific tab content if needed
+            if (tabId === 'leaderboard') {
+                updateLeaderboard();
+            } else if (tabId === 'groups') {
+                updateGroupsList();
+            }
+        }
+
+        // Update leaderboard
+        function updateLeaderboard() {
+            leaderboardBody.innerHTML = '';
+            
+            mockDatabase.leaderboard.forEach((user, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="rank">${index + 1}</td>
+                    <td>${user.username}</td>
+                    <td class="user-score">${user.highScore}</td>
+                    <td>${user.gamesPlayed}</td>
+                    <td>${user.accuracy}%</td>
+                `;
+                leaderboardBody.appendChild(row);
+            });
+        }
+
+        // Update groups list
+        function updateGroupsList() {
+            groupList.innerHTML = '';
+            
+            mockDatabase.groups.forEach(group => {
+                const isMember = currentUser && group.members.includes(currentUser.id);
+                
+                const card = document.createElement('div');
+                card.className = 'group-card';
+                card.innerHTML = `
+                    <h3 class="group-name">${group.name}</h3>
+                    <p class="group-description">${group.description}</p>
+                    <p class="group-members">Members: ${group.members.length}</p>
+                    <button class="group-join-btn" data-group-id="${group.id}" ${isMember ? 'disabled' : ''}>
+                        ${isMember ? 'Joined' : 'Join Group'}
+                    </button>
+                `;
+                groupList.appendChild(card);
+            });
+
+            // Add event listeners to join buttons
+            document.querySelectorAll('.group-join-btn').forEach(btn => {
+                btn.addEventListener('click', joinGroup);
+            });
+        }
+
+        // Join group
+        function joinGroup(e) {
+            if (!currentUser) {
+                showToast('Please login to join a group', 'error');
+                return;
+            }
+
+            const groupId = parseInt(e.target.getAttribute('data-group-id'));
+            const group = mockDatabase.groups.find(g => g.id === groupId);
+            
+            if (group && !group.members.includes(currentUser.id)) {
+                group.members.push(currentUser.id);
+                showToast(`Joined ${group.name}`, 'success');
+                updateGroupsList();
+            }
+        }
+
+        // Create group
+        function createGroup() {
+            if (!currentUser) {
+                showToast('Please login to create a group', 'error');
+                return;
+            }
+
+            const name = document.getElementById('group-name').value;
+            const description = document.getElementById('group-description').value;
+
+            if (!name) {
+                showToast('Please enter a group name', 'error');
+                return;
+            }
+
+            // Create new group (mock)
+            const newGroup = {
+                id: mockDatabase.groups.length + 1,
+                name,
+                description,
+                members: [currentUser.id]
+            };
+
+            mockDatabase.groups.push(newGroup);
+            showToast(`Group "${name}" created!`, 'success');
+            
+            // Reset form
+            document.getElementById('group-name').value = '';
+            document.getElementById('group-description').value = '';
+            createGroupForm.style.display = 'none';
+            showCreateGroupBtn.style.display = 'block';
+            
+            // Update groups list
+            updateGroupsList();
+        }
+
+        // Start the game
+        function startGame() {
+            // Select 10 random questions
+            gameState.questions = [...questions]
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 10);
+            
+            gameState.currentQuestionIndex = 0;
+            gameState.score = 0;
+            gameState.answers = [];
+            
+            // Show game screen
+            startScreen.classList.remove('active-screen');
+            gameScreen.classList.add('active-screen');
+            resultScreen.classList.remove('active-screen');
+            
+            // Load first question
+            loadQuestion();
+        }
+
+        // Load current question
+        function loadQuestion() {
+            const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
+            
+            // Update progress
+            const progress = ((gameState.currentQuestionIndex) / gameState.questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Update score
+            scoreDisplay.textContent = `Score: ${gameState.score}`;
+            
+            // Set question text
+            questionText.textContent = currentQuestion.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options
+            currentQuestion.options.forEach(option => {
+                const optionBtn = document.createElement('button');
+                optionBtn.className = 'option-btn';
+                optionBtn.textContent = option;
+                optionBtn.addEventListener('click', () => selectAnswer(option));
+                optionsContainer.appendChild(optionBtn);
+            });
+            
+            // Hide next button
+            nextBtn.style.display = 'none';
+        }
+
+        // Select answer
+        function selectAnswer(selectedOption) {
+            gameState.selectedAnswer = selectedOption;
+            const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
+            
+            // Disable all options
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.disabled = true;
+                
+                // Mark correct/incorrect
+                if (btn.textContent === currentQuestion.correctAnswer) {
+                    btn.classList.add('correct');
+                } else if (btn.textContent === selectedOption && selectedOption !== currentQuestion.correctAnswer) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            // Mark selected if correct
+            if (selectedOption === currentQuestion.correctAnswer) {
+                document.querySelectorAll('.option-btn').forEach(btn => {
+                    if (btn.textContent === selectedOption) {
+                        btn.classList.add('correct');
+                    }
+                });
+                gameState.score++;
+                scoreDisplay.textContent = `Score: ${gameState.score}`;
+            }
+            
+            // Store answer for review
+            gameState.answers.push({
+                question: currentQuestion.question,
+                selectedAnswer: selectedOption,
+                correctAnswer: currentQuestion.correctAnswer,
+                explanation: currentQuestion.explanation,
+                isCorrect: selectedOption === currentQuestion.correctAnswer
+            });
+            
+            // Show next button
+            nextBtn.style.display = 'block';
+        }
+
+        // Move to next question
+        function nextQuestion() {
+            gameState.currentQuestionIndex++;
+            
+            if (gameState.currentQuestionIndex < gameState.questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Show results
+        function showResults() {
+            // Update final score
+            finalScore.textContent = gameState.score;
+            
+            // Set result message based on score
+            let message;
+            if (gameState.score === gameState.questions.length) {
+                message = "Perfect! You're a quantifier expert!";
+            } else if (gameState.score >= gameState.questions.length * 0.8) {
+                message = "Excellent! You know your quantifiers very well!";
+            } else if (gameState.score >= gameState.questions.length * 0.6) {
+                message = "Good job! You're getting better with quantifiers!";
+            } else if (gameState.score >= gameState.questions.length * 0.4) {
+                message = "Not bad! Keep practicing to improve!";
+            } else {
+                message = "Keep trying! Review the guide and try again!";
+            }
+            resultMessage.textContent = message;
+            
+            // Save score if logged in (mock)
+            if (currentUser) {
+                mockDatabase.scores.push({
+                    userId: currentUser.id,
+                    score: gameState.score,
+                    date: new Date().toISOString().split('T')[0]
+                });
+                
+                // Update leaderboard (mock)
+                const userStats = mockDatabase.leaderboard.find(u => u.userId === currentUser.id);
+                if (userStats) {
+                    if (gameState.score > userStats.highScore) {
+                        userStats.highScore = gameState.score;
+                    }
+                    userStats.gamesPlayed++;
+                    userStats.accuracy = Math.round(((userStats.accuracy * (userStats.gamesPlayed - 1) + 
+                        (gameState.score / gameState.questions.length * 100)) / userStats.gamesPlayed));
+                } else {
+                    mockDatabase.leaderboard.push({
+                        userId: currentUser.id,
+                        username: currentUser.username,
+                        highScore: gameState.score,
+                        gamesPlayed: 1,
+                        accuracy: Math.round(gameState.score / gameState.questions.length * 100)
+                    });
+                }
+            }
+            
+            // Show result screen
+            gameScreen.classList.remove('active-screen');
+            resultScreen.classList.add('active-screen');
+        }
+
+        // Reset game
+        function resetGame() {
+            resultScreen.classList.remove('active-screen');
+            startScreen.classList.add('active-screen');
+        }
+
+        // Review answers
+        function reviewAnswers() {
+            alert('In a full implementation, this would show a detailed review of all answers with explanations.');
+            // This would typically open a modal or new screen showing each question,
+            // the selected answer, correct answer, and explanation
+        }
+
+        // Initialize the game when the page loads
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
